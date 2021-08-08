@@ -1,0 +1,6 @@
+{
+  "PRIVATE_KEY_EXECUTOR": "", 
+  "PRIVATE_KEY_SPONSOR": "",
+  "FLASHBOTS_RELAY_SIGNING_KEY": "",
+  "ETHEREUM_RPC_URL": "https://mainnet.infura.io/v3/PASTE_YOUR_INFURA_PROJECT_ID"
+}
