@@ -116,6 +116,11 @@ async function main() {
   console.log(`Gas Price: ${gasPriceToGwei(gasPrice)} gwei, of which base fee is ${block.baseFeePerGas} gwei`)
   console.log(`Gas Used: ${gasEstimateTotal.toString()} (+ 42k)`)
 
+  if (ENV.ONLY_SIMULATION) {
+    console.log("Skip execution")
+    process.exit(1)
+  }
+
   provider.on('block', async (blockNumber) => {
     const simulatedGasPrice = await checkSimulation(flashbotsProvider, signedBundle);
     const targetBlockNumber = blockNumber + BLOCKS_IN_FUTURE;
