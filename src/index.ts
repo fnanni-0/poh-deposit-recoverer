@@ -71,27 +71,18 @@ async function main() {
   const gasEstimateTotal = gasEstimates.reduce((acc, cur) => acc.add(cur), BigNumber.from(0))
 
   const gasPrice = PRIORITY_GAS_PRICE.add(block.baseFeePerGas || 0);
-  const fundExecutorTx = {
-    transaction: {
-      to: walletExecutor.address,
-      gasPrice: gasPrice,
-      value: BigNumber.from(21000).mul(gasPrice),
-      gasLimit: 21000,
-    },
-    signer: walletSponsor
-  };
+  const ethTransferCost = BigNumber.from(21000).mul(gasPrice);
   const moveDepositToSafetyTx = {
     transaction: {
       to: walletSponsor.address,
       gasPrice: gasPrice,
-      value: GWEI.mul(157000000), // 0.157 ETH
+      value: GWEI.mul(157000000).sub(ethTransferCost), // 0.157 ETH
       gasLimit: 21000,
     },
     signer: walletExecutor
   };
 
   const bundleTransactions: Array<FlashbotsBundleTransaction | FlashbotsBundleRawTransaction> = [
-    fundExecutorTx,
     ...sponsoredTransactions.map((transaction, txNumber) => {
       return {
         transaction: {
